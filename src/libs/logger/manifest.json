@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schemas.cute.engineering/stable/cutekit.manifest.component.v1",
+    "type": "lib",
+    "id": "logger",
+    "props": {
+        "export-headers": "includes"
+    },
+    "requires": [
+        "stdlibc",
+        "nanoprintf"
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "$schema": "https://schemas.cute.engineering/stable/cutekit.manifest.component.v1",
+    "id": "kernel.core",
+    "type": "exe",
+    "description": "(No description)",
+    "requires": [
+        "stdlibc",
+        "logger"
+    ]
+}

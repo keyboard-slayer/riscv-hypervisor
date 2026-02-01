@@ -1,0 +1,7 @@
+{
+    "$schema": "https://schemas.cute.engineering/stable/cutekit.manifest.project.v1",
+    "id": "hyprvisor",
+    "type": "project",
+    "description": "(No description)",
+    "version": "0.0.1"
+}

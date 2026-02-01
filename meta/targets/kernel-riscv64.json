@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schemas.cute.engineering/stable/cutekit.manifest.target.v1",
+    "id": "kernel-riscv64",
+    "type": "target",
+    "props": {
+        "toolchain": "clang",
+        "arch": "riscv64",
+        "bits": "64",
+        "sys": "kernel",
+        "abi": "sysv",
+        "freestanding": true,
+        "host": false,
+        "sys-encoding": "utf8",
+        "sys-line-ending": "lf",
+        "sys-path-separator": "slash",
+        "sys-terminal": "ansi"
+    },
+    "tools": {
+        "cc": {
+            "cmd": "{shell.env('CC', shell.latest('clang'))}",
+            "args": [
+                "-march=rv64ima",
+                "-mabi=lp64",
+                "--target=riscv64",
+                "-nostdlib",
+                "-ffreestanding",
+                "-mcmodel=medany"
+            ]
+        },
+        "cxx": {
+            "cmd": "{shell.env('CXX', shell.latest('clang++'))}",
+            "args": [
+                "--target=riscv64",
+                "-nostdlib",
+                "-ffreestanding",
+                "-fno-exceptions",
+                "-fno-rtti",
+                "-mcmodel=medany"
+            ]
+        },
+        "ld": {
+            "cmd": "{shell.env('LD', shell.latest('ld.lld'))}",
+            "args": [
+                "-m",
+                "elf64lriscv",
+                "-T{utils.relpath('kernel-riscv64.ld')}",
+                "-z",
+                "max-page-size=0x1000"
+            ],
+            "files": [
+                "{utils.relpath('kernel-riscv64.ld')}"
+            ]
+        },
+        "ar": {
+            "cmd": "{shell.env('AR', shell.latest('llvm-ar'))}",
+            "args": [
+                "rcs"
+            ]
+        },
+        "as": {
+            "cmd": "{shell.env('AS', shell.latest('clang'))}",
+            "args": [
+                "--target=riscv64",
+                "-c"
+            ]
+        }
+    }
+}
+
