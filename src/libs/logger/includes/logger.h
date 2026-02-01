@@ -8,7 +8,12 @@
 #define log$(...) _log(LOG_INFO, __FILE__, __LINE__, __VA_ARGS__)
 #define warn$(...) _log(LOG_WARN, __FILE__, __LINE__, __VA_ARGS__)
 #define error$(...) _log(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
-#define panic$(...) _log(LOG_PANIC, __FILE__, __LINE__, __VA_ARGS__)
+#define panic$(...)                                       \
+    {                                                     \
+        _log(LOG_PANIC, __FILE__, __LINE__, __VA_ARGS__); \
+        for (;;)                                          \
+            __asm__ volatile("wfi");                      \
+    }
 #define print$(...) _log(LOG_NONE, "", 0, __VA_ARGS__)
 
 typedef enum {

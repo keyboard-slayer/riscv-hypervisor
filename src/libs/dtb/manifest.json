@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schemas.cute.engineering/stable/cutekit.manifest.component.v1",
+    "type": "lib",
+    "id": "dtb",
+    "props": {
+        "export-headers": "."
+    },
+    "requires": [
+        "traits"
+    ]
+}
+

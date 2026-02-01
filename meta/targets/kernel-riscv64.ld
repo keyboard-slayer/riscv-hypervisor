@@ -28,6 +28,10 @@ SECTIONS {
     . += 1024 * 1024; /* 1MB */
     __stack_top = .;
 
+    __early_heap = .;
+    . += 32 * 1024; /* 32KB */
+    __early_heap_end = .;
+
     /DISCARD/ : {
         *(.eh_frame);
     }

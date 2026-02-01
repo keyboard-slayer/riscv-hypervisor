@@ -5,6 +5,10 @@
     "description": "(No description)",
     "requires": [
         "stdlibc",
-        "logger"
+        "logger",
+        "traits",
+        "kernel.sbi",
+        "dtb",
+        "allocators"
     ]
 }

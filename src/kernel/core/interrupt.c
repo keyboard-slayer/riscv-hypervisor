@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "interrupt.h"
+#include "regs.h"
 
 static char const *low_exceptions[] = {
     "instruction address misaligned",
@@ -58,5 +59,5 @@ void handler(void) {
 }
 
 void register_handler(void) {
-    asm volatile("csrw stvec, %0" : : "r"((size_t)handler));
+    write_csr$(stvec, (size_t)handler);
 }
