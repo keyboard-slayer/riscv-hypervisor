@@ -2,3 +2,5 @@
 .cutekit/
 .venv/
 compile_commands.json
+qemu.log
+__pycache__/

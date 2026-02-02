@@ -4,7 +4,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "interrupt.h"
+#include "exception.h"
+#include "hypervisor.h"
 #include "sbi.h"
 
 extern uint8_t __bss[];
@@ -40,6 +41,7 @@ static void npf_impl(int c, [[maybe_unused]] void *ctx) {
     if (mem == NULL)
         panic$("Failed to find memory node in device tree");
 
+    enter_hs_mode();
     log$("Hanging...");
 
     for (;;)

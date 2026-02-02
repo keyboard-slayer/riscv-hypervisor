@@ -19,8 +19,7 @@
         "cc": {
             "cmd": "{shell.env('CC', shell.latest('clang'))}",
             "args": [
-                "-march=rv64ima",
-                "-mabi=lp64",
+                "-march=rv64gc",
                 "--target=riscv64",
                 "-nostdlib",
                 "-ffreestanding",
@@ -30,6 +29,7 @@
         "cxx": {
             "cmd": "{shell.env('CXX', shell.latest('clang++'))}",
             "args": [
+                "-march=rv64gc",
                 "--target=riscv64",
                 "-nostdlib",
                 "-ffreestanding",
@@ -60,6 +60,7 @@
         "as": {
             "cmd": "{shell.env('AS', shell.latest('clang'))}",
             "args": [
+                "-march=rv64gc",
                 "--target=riscv64",
                 "-c"
             ]
