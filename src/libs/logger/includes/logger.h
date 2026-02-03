@@ -6,6 +6,7 @@
 #define LOG_OUTPUT_MAX (8)
 
 #define log$(...) _log(LOG_INFO, __FILE__, __LINE__, __VA_ARGS__)
+#define debug$(...) _log(LOG_DEBUG, __FILE__, __LINE__, __VA_ARGS__)
 #define warn$(...) _log(LOG_WARN, __FILE__, __LINE__, __VA_ARGS__)
 #define error$(...) _log(LOG_ERROR, __FILE__, __LINE__, __VA_ARGS__)
 #define panic$(...)                                       \
@@ -18,6 +19,7 @@
 
 typedef enum {
     LOG_NONE,
+    LOG_DEBUG,
     LOG_INFO,
     LOG_WARN,
     LOG_ERROR,
@@ -28,6 +30,7 @@ typedef enum {
 
 static char const *level_names[LOG_EVENT_LENGTH] = {
     [LOG_NONE] = "",
+    [LOG_DEBUG] = "DEBUG",
     [LOG_INFO] = "INFO",
     [LOG_WARN] = "WARN",
     [LOG_ERROR] = "ERROR",
@@ -36,6 +39,7 @@ static char const *level_names[LOG_EVENT_LENGTH] = {
 
 static char const *level_colors[LOG_EVENT_LENGTH] = {
     [LOG_NONE] = "",
+    [LOG_DEBUG] = "\e[1;36m",
     [LOG_INFO] = "\e[1;34m",
     [LOG_WARN] = "\e[1;33m",
     [LOG_ERROR] = "\e[1;31m",

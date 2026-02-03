@@ -6,6 +6,7 @@
 
 #include "exception.h"
 #include "hypervisor.h"
+#include "pmm.h"
 #include "sbi.h"
 
 extern uint8_t __bss[];
@@ -37,10 +38,7 @@ static void npf_impl(int c, [[maybe_unused]] void *ctx) {
     if (root == NULL)
         panic$("Failed to parse device tree blob");
 
-    DTBNode *mem = dtb_lookup(root, "memory");
-    if (mem == NULL)
-        panic$("Failed to find memory node in device tree");
-
+    pmm_init(root, (Allocator *)&alloc);
     enter_hs_mode();
     log$("Hanging...");
 
