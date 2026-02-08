@@ -5,12 +5,14 @@
 #include "hypervisor.h"
 #include "paging.h"
 #include "pmm.h"
-#include "regs.h"
+#include "vcpu.h"
 
 #define KERNEL_ENTRY 0x100000
 
 uint8_t const kernel[] = {
-    0x6f, 0x00, 0x00, 0x00
+    0x85, 0x48, 0x01, 0x48, 0x13, 0x05, 0x10, 0x04, 0x73, 0x00, 0x00, 0x00,
+    0x13, 0x05, 0x20, 0x04, 0x73, 0x00, 0x00, 0x00, 0x13, 0x05, 0x30, 0x04,
+    0x73, 0x00, 0x00, 0x00, 0x01, 0xa0
 };
 
 void enter_hs_mode(void) {
@@ -30,15 +32,10 @@ void enter_hs_mode(void) {
         ) != 0)
         panic$("Failed to map kernel page");
 
-    Hstatus hstatus = {0};
-    hstatus.vsxl = 2;
-    hstatus.spv = 1;
-    write_csr$(hstatus, hstatus.bits);
+    Vcpu cpu = {0};
+    if (cpu_init(&cpu, (uintptr_t *)kernel_page.base, KERNEL_ENTRY) != 0)
 
-    uint64_t sstatus = read_csr$(sstatus);
-    write_csr$(sstatus, sstatus | (1UL << 8));
+        panic$("Failed to initialize CPU");
 
-    write_csr$(hgatp, hgatp$(kernel_page.base));
-    write_csr$(sepc, KERNEL_ENTRY);
-    __asm__ volatile("sret");
+    cpu_run(&cpu);
 }
