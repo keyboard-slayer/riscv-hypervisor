@@ -12,10 +12,8 @@ void *memcpy(void *dst, void const *src, size_t n) {
 
 void *memset(void *b, int c, size_t len) {
     char *d = (char *)b;
-
     while (len--)
-        *d++ = (char)c;
-
+        *d++ = c;
     return b;
 }
 

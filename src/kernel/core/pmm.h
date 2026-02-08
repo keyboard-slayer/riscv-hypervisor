@@ -26,6 +26,8 @@ struct pmm_alloc_param {
 
 PhysObj pmm_alloc(size_t pages);
 
+PhysObj pmm_allocz(size_t pages);
+
 void pmm_init(DTBNode *dtb, Allocator *alloc);
 
 void pmm_free(PhysObj obj);

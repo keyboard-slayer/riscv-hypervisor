@@ -22,6 +22,10 @@ static char *exceptions[] = {
     "Load guest-page fault",
     "Virtual instruction",
     "Store/AMO guest-page fault",
+    [20] = "Instruction guest-page fault",
+    [21] = "Load guest-page fault",
+    [22] = "Virtual instruction",
+    [23] = "Store/AMO guest-page fault",
 };
 
 static char const *interrupts[] = {
@@ -43,7 +47,7 @@ static void panic_handler(Stackframe *frame, uint32_t scause, uint32_t stval, ui
     print$("\n\x1b[0;31m!!! \x1b[33m---------------------------------------------------------------------------------------------------\x1b[0m\n\n");
     print$("    KERNEL PANIC\n\n");
     print$("    %s was raised\n", exceptions[scause]);
-    print$("    scause: %x, stval: %x\n\n", scause, stval);
+    print$("    scause: %d, stval: %x\n\n", scause, stval);
     print$("    RA   %016x GP  %016x TP  %016x SP %016x\n", frame->ra, frame->gp, frame->sp);
     print$("    T0   %016x T1  %016x T2  %016x T3 %016x\n", frame->t0, frame->t1, frame->t2, frame->t3);
     print$("    T4   %016x T5  %016x T6  %016x A0 %016x\n", frame->t4, frame->t5, frame->t6, frame->a0);
@@ -65,9 +69,9 @@ void register_handler(void) {
 }
 
 Stackframe *exception_handler(Stackframe *frame) {
-    uint32_t scause = read_csr$(scause);
-    uint32_t stval = read_csr$(stval);
-    uint32_t user_pc = read_csr$(sepc);
+    uint64_t scause = read_csr$(scause);
+    uint64_t stval = read_csr$(stval);
+    uint64_t user_pc = read_csr$(sepc);
 
     if (scause & (1 << 31)) {
         log$("Interrupt: %s", interrupts[scause & 0xff]);
